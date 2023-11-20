@@ -79,12 +79,12 @@ def estimate_from_dwis(data, axis=-2, return_mask=False, exclude_mask=None, ncor
     # output is each slice we took along axis, so the mask might be reversed
     sigma = np.zeros(len(output))
     N = np.zeros(len(output))
-    mask = np.zeros(data.shape[:-1], dtype=np.int16).swapaxes(0, axis)
+    mask = np.zeros(data.shape, dtype=np.int16).swapaxes(0, axis)
 
     for i, s in enumerate(output):
         sigma[i] = s[0]
         N[i] = s[1]
-        mask[i] = s[2]
+        mask[i] = s[2][:, None]
 
     if return_mask:
         return sigma, N, mask.swapaxes(0, axis)
